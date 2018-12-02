@@ -4,13 +4,13 @@ class WriteCsv
     protected $header;
     protected $values;
     protected $csv_file;
-    protected $delimter;
+    protected $delimeter;
     protected $csv_output;
     
     protected function writeCsv()
     {
         $fp = fopen($this->csv_output, 'w');
-        fputcsv($fp,$this->header,$this->delimter);
+        fputcsv($fp,$this->header,$this->delimeter);
         
         foreach ($this->values as $line)
         {
@@ -18,7 +18,7 @@ class WriteCsv
             foreach ($this->header as $key) {
                 $value_key[] = (isset($line[$key])) ? $line[$key] :"";
             }
-            fputcsv($fp,$value_key,$this->delimter);
+            fputcsv($fp,$value_key,$this->delimeter);
         }
         fclose($fp);
     }

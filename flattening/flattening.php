@@ -29,7 +29,7 @@ class FlatteningXml extends WriteCsv
         $leafs = array();
         foreach ($xml->children() as $child) {
             if (0 != $child->count()) {
-                $this->processNode($child);
+                $this->processNodes($child);
             } else {
                 $this->header[] = $child->getName();
                 $leafs[$child->getName()] = $child->__toString();

@@ -8,7 +8,7 @@ class MergeCsv extends WriteCsv
     {
         $this->csv_output = $output_csv;
         $this->max_length_of_lines = $max_length;
-        $this->delimter = $char_delimeter;
+        $this->delimeter = $char_delimeter;
     }
 
     private $max_length_of_lines;
@@ -18,7 +18,7 @@ class MergeCsv extends WriteCsv
         $values_file = array();
         if (($file = fopen($path_csv, "r")) !== FALSE) {
             $is_header = true;
-            while (($datas = fgetcsv($file, $this->max_length_of_lines, $this->delimter)) !== FALSE) {
+            while (($datas = fgetcsv($file, $this->max_length_of_lines, $this->delimeter)) !== FALSE) {
                 if ($is_header) {
                     $header = $datas;
                     $is_header = false;
