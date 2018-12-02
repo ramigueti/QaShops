@@ -14,8 +14,6 @@ class FlatteningXml extends WriteCsv
         $this->delimeter = $delimeter;
     }
 
-    private $header;
-
     private function loadXml($path_xml)
     {
         if (file_exists($path_xml)) {
