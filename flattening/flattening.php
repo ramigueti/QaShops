@@ -2,17 +2,18 @@
 include "../common/write_csv.php";
 
 /**
- * 
- * @author ramigueti
  *
+ * @author ramigueti
+ *        
  */
 class FlatteningXml extends WriteCsv
 {
-
-    function __construct($output_csv="output.csv", $delimeter=";") {
-        $this->csv_output=$output_csv; 
-        $this->delimeter=$delimeter;
+    function __construct($output_csv = "output.csv", $delimeter = ";")
+    {
+        $this->csv_output = $output_csv;
+        $this->delimeter = $delimeter;
     }
+
     private $header;
 
     private function loadXml($path_xml)
@@ -36,10 +37,9 @@ class FlatteningXml extends WriteCsv
                 $leafs[$child->getName()] = $child->__toString();
             }
         }
-     if(!empty($leafs))
-     {
-        $this->values[] = $leafs;
-     }
+        if (! empty($leafs)) {
+            $this->values[] = $leafs;
+        }
     }
 
     function flatteningXml($path_xml)
@@ -47,7 +47,7 @@ class FlatteningXml extends WriteCsv
         $xml = $this->loadXml($path_xml);
 
         $this->processNodes($xml);
-        $this->header=array_unique($this->header);
+        $this->header = array_unique($this->header);
         $this->writeCsv();
     }
 }
