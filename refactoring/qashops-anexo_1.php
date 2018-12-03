@@ -2,8 +2,8 @@
 
 class Product
 {
-
-    private function getOrdersQuantity($productId)
+    // Método utlizado para obtener la cantidad de ordenes de un producto
+    private static function getOrdersQuantity($productId)
     {
         return OrderLine::find()->select('SUM(quantity) as quantity')
             ->joinWith('order')
@@ -11,7 +11,8 @@ class Product
             ->scalar();
     }
 
-    private function getBlockedStockQuantity($productId)
+    // Método utlizado para obtener la cantidad de elements en carros de comprade un producto
+    private static function getBlockedStockQuantity($productId)
     {
         return BlockedStock::find()->select('SUM(quantity) as quantity')
             ->joinWith('shoppingCart')
@@ -19,7 +20,8 @@ class Product
             ->scalar();
     }
 
-    private function calculateQuantity($securityStockConfig, $quantity)
+    // Método para calcular el numero de unidades disponibles de un producto
+    private static function calculateQuantity($securityStockConfig, $quantity)
     {
         if (! empty($securityStockConfig)) {
             $quantity = ShopChannel::applySecurityStockConfig($quantity, @$securityStockConfig->mode, @$securityStockConfig->quantity);
@@ -29,7 +31,7 @@ class Product
 
     public static function stock($productId, $quantityAvailable, $cache = false, $cacheDuration = 60, $securityStockConfig = null)
     {
-        // Si tenemos cache la usamos
+        // Usamos cache
         if ($cache) {
             // Obtenemos el stock bloqueado por pedidos en curso
             $ordersQuantity = OrderLine::getDb()->cache(function ($db) use ($productId) {
@@ -40,7 +42,7 @@ class Product
             $blockedStockQuantity = BlockedStock::getDb()->cache(function ($db) use ($productId) {
                 return self::getBlockedStockQuantity($productId);
             }, $cacheDuration);
-        } else {
+        } else { //Sin cache
             // Obtenemos el stock bloqueado por pedidos en curso
             $ordersQuantity = self::getOrdersQuantity($productId);
 

@@ -1,19 +1,16 @@
 <?php
 include "../common/write_csv.php";
 
-/**
- *
- * @author ramigueti
- *        
- */
 class FlatteningXml extends WriteCsv
 {
+    // Contructor de la clase MergeCsv
     function __construct($output_csv = "output.csv", $delimeter = ";")
     {
         $this->csv_output = $output_csv;
         $this->delimeter = $delimeter;
     }
 
+    // Método privado que permite cargar un fichero Xml (devuelve un simpleXml)
     private function loadXml($path_xml)
     {
         if (file_exists($path_xml)) {
@@ -24,6 +21,8 @@ class FlatteningXml extends WriteCsv
         }
     }
 
+    // Método recursivo que dado un SimpleXml lo procesa llegando a las hojas
+    // Guardar por un lado la cabecera del futuro csv y por otro almacena en values clave y valor
     private function processNodes($xml)
     {
         $leafs = array();
@@ -40,6 +39,7 @@ class FlatteningXml extends WriteCsv
         }
     }
 
+    // Método público que dado un path con un fichero xml lo aplana y lo escribe en un fichero csv.
     function flatteningXml($path_xml)
     {
         $xml = $this->loadXml($path_xml);

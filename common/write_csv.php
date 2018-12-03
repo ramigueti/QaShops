@@ -1,4 +1,6 @@
 <?php
+
+// Clase común utilizada en flattening y mergeCsv que permite escribir un Csv en un fichero
 class WriteCsv
 {
     protected $header;
